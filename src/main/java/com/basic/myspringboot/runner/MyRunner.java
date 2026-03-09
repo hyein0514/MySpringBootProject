@@ -1,6 +1,9 @@
 package com.basic.myspringboot.runner;
 
+import com.basic.myspringboot.config.CustomerVO;
 import com.basic.myspringboot.property.MyBootProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -22,19 +25,29 @@ public class MyRunner implements ApplicationRunner {
     private Environment environment;
 
     @Autowired
-    private MyBootProperties properties;;
+    private MyBootProperties properties;
+
+    @Autowired
+    private CustomerVO customerVO;
+
+    //Logger 객체생성
+    private Logger logger = LoggerFactory.getLogger(MyRunner.class);
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("MyBootProperties getName() = " + properties.getName());
+        System.out.println("Logger 구현체 클래스명 = " + logger.getClass().getName());
 
-        System.out.println("${myboot.name}  = " + name);
-        System.out.println("${myboot.age}  = " + age);
+        logger.info("현재 활성화된 CustomerVO = {}", customerVO);
+        logger.info("MyBootProperties getName() = {}", properties.getName());
+        logger.info("MyBootProperties getFullName() = {}", properties.getFullName());
 
-        System.out.println("${myboot.fullName}  = " + environment.getProperty("myboot.fullName"));
+        logger.info("${myboot.name}  = {}", name);
+        logger.info("${myboot.age}  = {}", age);
 
-        System.out.println("VM 아규먼트 foo : " + args.containsOption("foo"));
-        System.out.println("Program 아규먼트 bar : " + args.containsOption("bar"));
+        logger.debug("DEBUG 레벨");
+        logger.debug(">>> ${myboot.fullName}  = {}", environment.getProperty("myboot.fullName"));
+        logger.debug("VM 아규먼트 foo : {}", args.containsOption("foo"));
+        logger.debug("Program 아규먼트 bar : {}", args.containsOption("bar"));
 
         /*
             default void forEach(Consumer<? super T> action)
