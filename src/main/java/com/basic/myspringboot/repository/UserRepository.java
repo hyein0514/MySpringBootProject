@@ -1,4 +1,4 @@
-package com.basic.myspringboot.Repository;
+package com.basic.myspringboot.repository;
 
 import com.basic.myspringboot.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
